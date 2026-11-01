@@ -1,21 +1,21 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>🛏️ベッドドンシミュレーター</title>
+    <title>🛏️床咚模拟器</title>
     <style>
         :root { --panel-width: 300px; }
-        body { margin: 0; font-family: 'Helvetica Neue', Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif; background: #ffffff; overflow: hidden; }
+        body { margin: 0; font-family: 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', Arial, sans-serif; background: #ffffff; overflow: hidden; }
         
-        /* 1. スマホ表示時の設定パネルスクロール・余白の最適化 */
+        /* 1. 优化手机端设置面板的滚动与留白 */
         #ui-panel {
             position: absolute; 
             top: 10px; 
             left: 10px; 
             width: var(--panel-width);
             max-height: calc(100vh - 20px);
-            max-height: calc(100dvh - 20px); /* 可変ビューポート対応 */
+            max-height: calc(100dvh - 20px); /* 适配可变视口 */
             background: rgba(255, 255, 255, 0.95); 
             padding: 15px; 
             padding-bottom: 40px; 
@@ -45,7 +45,7 @@
             .input-group { padding: 8px; margin-bottom: 5px; }
         }
 
-        /* 2. パネル折りたたみ（「閉じる」押下）時の背景枠固定の解消 */
+        /* 2. 消除面板折叠（点击“收起”）时背景框被固定的情况 */
         #ui-panel.collapsed {
             max-height: none !important;
             padding: 10px 15px !important;
@@ -55,11 +55,11 @@
         }
 
         @media screen and (max-width: 480px) { 
-            /* スマホ表示で閉じた場合、右端の固定を解除してタイトルサイズへ収める */
+            /* 手机端收起时解除右端固定，收进标题尺寸 */
             #ui-panel.collapsed { right: auto; }
         }
 
-        /* ヘッダーをパネル上部に固定（スクロールしても上に張り付く） */
+        /* 头部固定在面板顶部（滚动时依然吸顶） */
         .panel-header { 
             display: flex; 
             justify-content: space-between; 
@@ -67,8 +67,8 @@
             cursor: pointer; 
             user-select: none; 
             gap: 10px; 
-            position: sticky; /* パネル内スクロール時も上に固定 */
-            top: -15px;       /* padding 分を相殺 */
+            position: sticky; /* 面板内滚动时同样置顶 */
+            top: -15px;       /* 抵消 padding 的高度 */
             background: rgba(255, 255, 255, 0.95);
             padding: 10px 0;
             margin: -15px -15px 10px -15px;
@@ -85,7 +85,7 @@
             background: #eee; 
             padding: 4px 10px; 
             border-radius: 10px; 
-            white-space: nowrap; /* テキストの意図しない改行を防止 */
+            white-space: nowrap; /* 防止文本意外换行 */
         }
 
         .app-title { 
@@ -93,7 +93,7 @@
             margin: 0; 
             color: #333; 
             font-weight: bold; 
-            white-space: nowrap; /* タイトルの改行を防止 */
+            white-space: nowrap; /* 防止标题换行 */
         }
 
         .collapsed #ui-content { display: none; }
@@ -155,7 +155,7 @@
         .info-value { font-weight: 800; font-size: 18px; color: #2c3e50; font-variant-numeric: tabular-nums; }
         .unit { font-size: 11px; margin-left: 3px; color: #7f8c8d; font-weight: normal; }
         
-        /* 視点ラベルの位置調整 */
+        /* 调整视角标签的位置 */
         #view-label { 
             position: absolute; 
             bottom: 20px; 
@@ -179,64 +179,64 @@
 
 <div id="ui-panel">
     <div class="panel-header" onclick="togglePanel()">
-        <h1 class="app-title">🛏️ベッドドンシミュレーター</h1>
-        <span id="toggle-text">閉じる</span>
+        <h1 class="app-title">🛏️床咚模拟器</h1>
+        <span id="toggle-text">收起</span>
     </div>
 
     <div id="ui-content">
-        <p class="app-description">性別と身長からベッドドンをシミュレーションします。</p>
+        <p class="app-description">可根据性别与身高模拟床咚。</p>
         
         <div class="input-group group-a">
-            <div class="section-header"><strong>A (下・ベッドに仰向け)</strong></div>
+            <div class="section-header"><strong>A（下方・仰躺在床上）</strong></div>
             <div class="input-row">
-                <div class="input-item"><span class="hint">名前</span><input type="text" id="nameA" placeholder="名前A" oninput="updateScene()"></div>
-                <div class="input-item" style="flex: 0.6;"><span class="hint">性別</span><select id="genderA" onchange="updateScene()"><option value="male">男</option><option value="female" selected>女</option></select></div>
+                <div class="input-item"><span class="hint">名字</span><input type="text" id="nameA" placeholder="名字A" oninput="updateScene()"></div>
+                <div class="input-item" style="flex: 0.6;"><span class="hint">性别</span><select id="genderA" onchange="updateScene()"><option value="male">男</option><option value="female" selected>女</option></select></div>
             </div>
             <div class="input-row">
-                <div class="input-item"><span class="hint">身長 (cm)</span><input type="number" id="heightA" value="158.0" step="0.1" oninput="updateScene()"></div>
-                <div class="input-item" style="flex: 0.35;"><span class="hint">色</span><input type="color" id="colorA" class="color-picker" value="#ffcc99" oninput="updateScene()"></div>
+                <div class="input-item"><span class="hint">身高 (cm)</span><input type="number" id="heightA" value="158.0" step="0.1" oninput="updateScene()"></div>
+                <div class="input-item" style="flex: 0.35;"><span class="hint">颜色</span><input type="color" id="colorA" class="color-picker" value="#ffcc99" oninput="updateScene()"></div>
             </div>
         </div>
 
         <div class="input-group group-b">
-            <div class="section-header"><strong>B (上・立ち)</strong></div>
+            <div class="section-header"><strong>B（上方・站立）</strong></div>
             <div class="input-row">
-                <div class="input-item"><span class="hint">名前</span><input type="text" id="nameB" placeholder="名前B" oninput="updateScene()"></div>
-                <div class="input-item" style="flex: 0.6;"><span class="hint">性別</span><select id="genderB" onchange="updateScene()"><option value="male" selected>男</option><option value="female">女</option></select></div>
+                <div class="input-item"><span class="hint">名字</span><input type="text" id="nameB" placeholder="名字B" oninput="updateScene()"></div>
+                <div class="input-item" style="flex: 0.6;"><span class="hint">性别</span><select id="genderB" onchange="updateScene()"><option value="male" selected>男</option><option value="female">女</option></select></div>
             </div>
             <div class="input-row">
-                <div class="input-item"><span class="hint">身長 (cm)</span><input type="number" id="heightB" value="171.5" step="0.1" oninput="updateScene()"></div>
-                <div class="input-item" style="flex: 0.35;"><span class="hint">色</span><input type="color" id="colorB" class="color-picker" value="#ffad60" oninput="updateScene()"></div>
+                <div class="input-item"><span class="hint">身高 (cm)</span><input type="number" id="heightB" value="171.5" step="0.1" oninput="updateScene()"></div>
+                <div class="input-item" style="flex: 0.35;"><span class="hint">颜色</span><input type="color" id="colorB" class="color-picker" value="#ffad60" oninput="updateScene()"></div>
             </div>
             <div class="input-item" style="margin-top: 5px;">
-                <span class="hint">手の位置 (頭側 ↔ 足側)</span>
+                <span class="hint">手的位置（头侧 ↔ 脚侧）</span>
                 <input type="range" id="armPos" min="-1.55" max="-1.2" step="0.01" value="-1.45" oninput="updateScene()">
             </div>
         </div>
 
         <div style="padding: 0 5px;">
-            <button class="switch-btn swap-btn" onclick="swapAB()">⇄ 上下（AとB）を入れ替える</button>
-            <button class="switch-btn" onclick="switchView()">🔄 視点を切り替える</button>
+            <button class="switch-btn swap-btn" onclick="swapAB()">⇄ 交换上下（A 与 B）</button>
+            <button class="switch-btn" onclick="switchView()">🔄 切换视角</button>
         </div>
         
         <div id="info-container">
             <div class="info-box" id="info"></div>
             <button class="share-btn" onclick="shareToX()">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>で結果をシェアする
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg> 分享结果
             </button>
             <div class="other-tools-link">
-                <p style="font-size: 10px; color: #888; margin-bottom: 8px;">こちらもチェック❣🤩</p>
-                <a href="https://qwertyaz111.github.io/my-site-hub/">ツール・シミュレーター一覧</a>
+                <p style="font-size: 10px; color: #888; margin-bottom: 8px;">顺便也看看这些❣🤩</p>
+                <a href="https://qwertyaz111.github.io/my-site-hub/">工具・模拟器合集</a>
             </div>
             <div class="usage-notes">
-                スクショ投稿や加工、トレース等はご自由にお楽しみください。<br>
-                ※営利目的や商用利用はご遠慮ください。
+                截图分享、二次加工、临摹描图等都可以随意使用。<br>
+                ※请勿用于营利、商业用途。
             </div>
         </div>
     </div>
 </div>
 
-<div id="view-label">三人称視点</div>
+<div id="view-label">第三人称视角</div>
 <div class="crosshair" id="crosshair" style="display:none;"></div>
 <div id="canvas-container"></div>
 
@@ -247,16 +247,16 @@
     let personA, personB, walkGroup, bedGroup;
     let currentView = '3rd';
 
-    // ベッドの設定
-    const BED_H = 0.55;  // ベッドの高さ(m)
-    const BED_W = 1.6;   // ベッドの幅(m)  クイーンサイズ
-    const BED_L = 2.0;   // ベッドの長さ(m) クイーンサイズ
+    // 床的设置
+    const BED_H = 0.55;  // 床的高度(m)
+    const BED_W = 1.6;   // 床的宽度(m)  大号双人床尺寸
+    const BED_L = 2.0;   // 床的长度(m) 大号双人床尺寸
 
-    // 三人称視点の初期アングル（イラストと同じ真横寄り）
+    // 第三人称视角的初始机位（与插图一样接近正侧面）
     const DEFAULT_3RD = { x: 0.12, y: -Math.PI / 2 };
     let rotation = { x: DEFAULT_3RD.x, y: DEFAULT_3RD.y }, camDist = 3.6, isDragging = false, previousTouch = null, initialPinchDist = null;
 
-    // 三人称視点で見切れないようにするための注目点（マネキンとベッド全体の中心）
+    // 为避免第三人称视角下被切边而设置的注视点（人偶与床整体的中心）
     let fitCenter = new THREE.Vector3();
     let fitBox = new THREE.Box3();
     const CAM_MAX_DIST = 40;
@@ -281,14 +281,14 @@
         clock = new THREE.Clock();
         setupControls();
 
-        // 入力フォームからフォーカスが外れた際に、パネルのスクロール位置を上部へリセットする
+        // 输入框失焦时，把面板的滚动位置重置回顶部
         document.querySelectorAll('#ui-panel input, #ui-panel select').forEach(element => {
             element.addEventListener('blur', () => {
                 const panel = document.getElementById('ui-panel');
                 if (panel) {
                     panel.scrollTop = 0;
                 }
-                // iOS Safari等の画面全体のズレ防止策
+                // 防止 iOS Safari 等设备上整屏偏移的对策
                 window.scrollTo(0, 0);
             });
         });
@@ -303,7 +303,7 @@
             const panel = document.getElementById('ui-panel');
             const text = document.getElementById('toggle-text');
             panel.classList.toggle('collapsed');
-            text.innerText = panel.classList.contains('collapsed') ? '開く' : '閉じる';
+            text.innerText = panel.classList.contains('collapsed') ? '展开' : '收起';
         };
 
         updateScene();
@@ -317,7 +317,7 @@
         fitCamera();
     }
 
-    // マネキンとベッド全体が画面内に収まるように、注目点とカメラ距離を自動調整する
+    // 自动调整注视点与相机距离，让人偶和床整体刚好落在画面内
     function fitCamera() {
         if (!walkGroup || !personA || !personB || !bedGroup) return;
         walkGroup.updateMatrixWorld(true);
@@ -328,21 +328,21 @@
         fitBox.copy(box);
         fitCenter = box.getCenter(new THREE.Vector3());
 
-        // 現在の三人称視点の向き（一人称視点中は初期アングルで計算）
+        // 当前第三人称视角的朝向（第一人称视角时按初始机位计算）
         const rx = (currentView === '3rd') ? rotation.x : DEFAULT_3RD.x;
         const ry = (currentView === '3rd') ? rotation.y : DEFAULT_3RD.y;
         camDist = calcFitDist(rx, ry);
     }
 
-    // 指定した向きから見て、マネキンとベッド全体が画面に収まる最小のカメラ距離
-    // （これより近づくと見切れるので、拡大の限界として使う）
+    // 从指定方向看过去，人偶与床整体刚好入画的最小相机距离
+    // （再靠近就会被切边，因此用作放大的上限）
     function calcFitDist(rx, ry) {
         const box = fitBox;
         const dir = new THREE.Vector3(
             Math.sin(ry) * Math.cos(rx),
             Math.sin(rx),
             Math.cos(ry) * Math.cos(rx)
-        ); // 注目点 → カメラ の向き
+        ); // 注视点 → 相机 的方向
         const right = new THREE.Vector3().crossVectors(new THREE.Vector3(0, 1, 0), dir).normalize();
         const up = new THREE.Vector3().crossVectors(dir, right).normalize();
 
@@ -361,7 +361,7 @@
             if (d > need) need = d;
         }
 
-        // 少し余白を持たせる
+        // 留出一点余白
         return Math.max(1.0, Math.min(CAM_MAX_DIST, need * 1.12));
     }
 
@@ -497,7 +497,7 @@
         mattress.position.set(0, BED_H - 0.125, -BED_L / 2);
         g.add(frame, mattress);
 
-        // 枕をふたつ（頭側に並べる）
+        // 两个枕头（并排放在头侧）
         const pillowMat = new THREE.MeshPhongMaterial({ color: 0xffffff });
         [-1, 1].forEach(side => {
             const pillow = new THREE.Mesh(new THREE.BoxGeometry(0.6, 0.14, 0.4), pillowMat);
@@ -507,7 +507,7 @@
         return g;
     }
 
-    // 名前タグを頭のすぐ上（ワールドの真上方向）に置く
+    // 把名字标签放在头顶正上方（世界的正上方）
     function raiseNameTag(person) {
         const top = new THREE.Vector3(0, person.userData.height, 0).applyQuaternion(person.quaternion).add(person.position);
         top.y += 0.35;
@@ -515,12 +515,12 @@
         person.nameTag.position.copy(local);
     }
 
-    // 頭（目）の現在のワールド位置
+    // 头部（眼睛）当前的世界位置
     function headEyeWorld(person) {
         return person.headParts.position.clone().applyQuaternion(person.quaternion).add(person.position);
     }
 
-    // 首を支点に、お互いの目をまっすぐ見つめ合うように頭を向ける
+    // 以颈部为支点转动头部，让彼此的眼睛笔直对视
     function aimHead(person, other) {
         const u = person.userData;
         const headH = u.height * 0.13;
@@ -547,9 +547,9 @@
 
         const uA = personA.userData, uB = personB.userData;
 
-        // ===== A：ベッドの奥寄りに仰向け。膝がベッドの足側の縁に来て、膝から下を縁の外へ垂らす =====
-        const KNEE_OVER = 0.08;                         // 膝がベッドの縁(z:0)より外に出る量
-        const yThigh = BED_H + uA.depth * 0.5;          // マットレスの上に背中をつけた高さ
+        // ===== A：仰躺在床的靠里侧。膝盖位于床的脚侧边缘，膝盖以下垂到边缘外 =====
+        const KNEE_OVER = 0.08;                         // 膝盖超出床沿(z:0)外侧的量
+        const yThigh = BED_H + uA.depth * 0.5;          // 背部贴在床垫上时的高度
         const thighA = uA.legH * 0.5;
         const legSplayA = 10 * Math.PI / 180;
         const kneeZ = KNEE_OVER;
@@ -558,36 +558,36 @@
 
         personA.legs.forEach((leg, i) => {
             const phi = (i === 0 ? -1 : 1) * legSplayA;
-            leg.hip.rotation.set(0, 0, phi);            // 太ももはベッドの上でまっすぐ
-            // ふくらはぎは真下（ワールドの鉛直方向）へ
+            leg.hip.rotation.set(0, 0, phi);            // 大腿在床面上保持笔直
+            // 小腿朝正下方（世界的垂直方向）
             leg.knee.quaternion.setFromUnitVectors(new THREE.Vector3(0, -1, 0), new THREE.Vector3(0, 0, -1));
         });
 
-        // ===== B：Aのふくらはぎの外側に立ち、上体を前に倒して両手をベッドにつく =====
+        // ===== B：站在 A 的小腿外侧，上身前倾、双手撑在床上 =====
         const legHB = uB.legH;
-        const sB = uB.torsoH - uB.width * 0.15;          // 腰(股関節)から肩までの長さ
+        const sB = uB.torsoH - uB.width * 0.15;          // 从腰（髋关节）到肩膀的长度
         const armSplay = 0.15;
-        const LB = uB.armLen * Math.cos(armSplay);       // 腕の長さ（横への開きを考慮）
-        const zf = kneeZ + uA.width * 0.2 + uB.width * 0.2 + 0.03;   // Bの足の位置（Aのふくらはぎの外側）
+        const LB = uB.armLen * Math.cos(armSplay);       // 手臂的长度（考虑横向张开）
+        const zf = kneeZ + uA.width * 0.2 + uB.width * 0.2 + 0.03;   // B 的脚的位置（A 小腿的外侧）
 
-        // 手をつく位置：スライダーで Aの肩のすぐ下(頭側) ↔ お腹あたり(足側)
+        // 手撑的位置：用滑块调节，从 A 肩膀正下方(头侧) ↔ 腹部附近(脚侧)
         const uSl = Math.min(1, Math.max(0, (armSlider + 1.55) / 0.35));
         const zShoulderA = personA.position.z - (uA.legH + uA.torsoH - uA.width * 0.15);
         const zh = zShoulderA + uA.height * (0.06 + 0.22 * uSl);
         const yh = BED_H + 0.02;
 
-        // Bの股関節から手までのベクトル（前方=頭側 を f とする）
+        // 从 B 的髋关节到手的向量（以前方=头侧为 f）
         let fv = zf - zh;
         const dy = yh - legHB;
         const dMax = (sB + LB) * 0.999;
-        if (fv * fv + dy * dy > dMax * dMax) fv = Math.sqrt(Math.max(0, dMax * dMax - dy * dy));  // 届かない時は目一杯まで
+        if (fv * fv + dy * dy > dMax * dMax) fv = Math.sqrt(Math.max(0, dMax * dMax - dy * dy));  // 够不到时就伸到极限
         const D = Math.max(0.01, Math.sqrt(fv * fv + dy * dy));
         const cosA = Math.max(-1, Math.min(1, (D * D + sB * sB - LB * LB) / (2 * sB * D)));
-        let alpha = Math.atan2(fv, dy) - Math.acos(cosA);           // 上体の前傾角（鉛直から）
+        let alpha = Math.atan2(fv, dy) - Math.acos(cosA);           // 上身的前倾角（相对垂直）
         alpha = Math.max(0.05, Math.min(1.5, alpha));
         const armF = fv - sB * Math.sin(alpha);
         const armY = dy - sB * Math.cos(alpha);
-        const beta = Math.atan2(-armF, -armY);                      // 腕の角度（鉛直から）
+        const beta = Math.atan2(-armF, -armY);                      // 手臂的角度（相对垂直）
 
         const qY = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), Math.PI);
         const qX = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), -alpha);
@@ -600,17 +600,17 @@
         });
 
         personB.legs.forEach((hip, i) => {
-            hip.rotation.x = -alpha;                                // 脚は床に対して垂直に立てる
+            hip.rotation.x = -alpha;                                // 腿相对地面垂直立起来
             hip.rotation.z = (i === 0 ? -1 : 1) * 0.08;
         });
 
-        // ===== お互いの目を見つめ合う（首を支点に数回補正して収束させる） =====
+        // ===== 让彼此的眼睛对视（以颈部为支点反复修正直至收敛） =====
         for (let k = 0; k < 4; k++) {
             aimHead(personA, personB);
             aimHead(personB, personA);
         }
 
-        // ===== ベッド（クイーンサイズ）：足側の縁が z:0 =====
+        // ===== 床（大号双人床尺寸）：脚侧边缘位于 z:0 =====
         bedGroup = createBed();
 
         raiseNameTag(personA);
@@ -625,23 +625,23 @@
 
         if(currentView !== '3rd') {
             const myName = (currentView === 'A') ? nA_clean : nB_clean;
-            document.getElementById('view-label').innerText = `${myName} の視点`;
+            document.getElementById('view-label').innerText = `${myName} 的视角`;
             if(currentView === 'A') { personA.headParts.visible = false; personA.nameTag.visible = false; }
             if(currentView === 'B') { personB.headParts.visible = false; personB.nameTag.visible = false; }
         }
 
         document.getElementById('info').innerHTML = `
-            <div class="info-row"><span class="info-label">📏 身長差</span><span class="info-value">${Math.abs(hA-hB).toFixed(1)}<span class="unit">cm</span></span></div>
+            <div class="info-row"><span class="info-label">📏 身高差</span><span class="info-value">${Math.abs(hA-hB).toFixed(1)}<span class="unit">cm</span></span></div>
         `;
 
-        // 三人称視点で見切れないようにカメラを自動調整
+        // 为避免第三人称视角下被切边而自动调整相机
         fitCamera();
     }
 
     function animate() {
         requestAnimationFrame(animate);
         
-        // ふたりの胴体の中心を計算（世界座標ベース）
+        // 计算两人躯干的中心（基于世界坐标）
         const torsoAWorldPos = new THREE.Vector3(0, personA.userData.legH + personA.userData.torsoH * 0.5, 0).applyMatrix4(personA.matrixWorld);
         const torsoBWorldPos = new THREE.Vector3(0, personB.userData.legH + personB.userData.torsoH * 0.5, 0).applyMatrix4(personB.matrixWorld);
         const centerPos = new THREE.Vector3().addVectors(torsoAWorldPos, torsoBWorldPos).multiplyScalar(0.5);
@@ -649,7 +649,7 @@
         if (currentView === '3rd') {
             rotation.x = Math.max(-Math.PI * 0.499, Math.min(Math.PI * 0.499, rotation.x));
             camera.up.set(0, 1, 0);
-            // 引いている時はマネキンとベッド全体の中心、拡大するほどマネキンの中心へ注目点を寄せる（ズーム制限なし）
+            // 拉远时注视人偶与床整体的中心，越放大越向人偶中心靠拢（无缩放限制）
             const fitD = calcFitDist(rotation.x, rotation.y);
             const t = Math.max(0, Math.min(1, (fitD - camDist) / (fitD * 0.6)));
             const focus = fitCenter.clone().lerp(centerPos, t);
@@ -746,9 +746,9 @@
         const myName = (currentView === 'A') ? nA_clean : nB_clean;
 
         if (currentView === '3rd') {
-            document.getElementById('view-label').innerText = '三人称視点';
+            document.getElementById('view-label').innerText = '第三人称视角';
         } else {
-            document.getElementById('view-label').innerText = `${myName} の視点`;
+            document.getElementById('view-label').innerText = `${myName} 的视角`;
         }
 
         document.getElementById('crosshair').style.display = currentView === '3rd' ? 'none' : 'block';
@@ -767,7 +767,7 @@
         if (currentView === '3rd') {
             rotation.x = DEFAULT_3RD.x;
             rotation.y = DEFAULT_3RD.y;
-            fitCamera(); // 三人称に戻った時も見切れないように距離を再調整
+            fitCamera(); // 回到第三人称时也重新调整距离，避免被切边
         } else {
             rotation.x = 0;
             rotation.y = 0;
@@ -779,11 +779,78 @@
         const nB = document.getElementById('nameB').value || 'B';
         const hA = parseFloat(document.getElementById('heightA').value) || 158.0;
         const hB = parseFloat(document.getElementById('heightB').value) || 171.5;
-        const text = `${nB}(${hB.toFixed(1)}cm)が${nA}(${hA.toFixed(1)}cm)にベッドドン！\n#ベッドドンシミュレーター\n`;
+        const text = `${nB}（${hB.toFixed(1)}cm）把 ${nA}（${hA.toFixed(1)}cm）床咚了！\n#床咚模拟器\n`;
         window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(window.location.href)}`, '_blank');
     }
 
     init();
+</script>
+
+<script>
+/* 设置持久化：名字・身高・颜色等会记住，刷新后自动恢复 */
+(function () {
+  var KEY = 'simSettings:' + location.pathname;
+  var SKIP = { seek: 1, pVol: 1 };
+  function list() {
+    var els = document.querySelectorAll('input,select,textarea'), out = [], i, el;
+    for (i = 0; i < els.length; i++) {
+      el = els[i];
+      if (el.type === 'file' || el.type === 'button' || el.type === 'submit' || el.type === 'reset') continue;
+      if (el.id && SKIP[el.id]) continue;
+      out.push(el);
+    }
+    return out;
+  }
+  function keyOf(el) {
+    if (el.id) return 'id:' + el.id;
+    var cn = (el.className || '').split(/\s+/)[0];
+    if (!cn) return null;
+    var sibs = document.querySelectorAll(el.tagName.toLowerCase() + '[class~="' + cn + '"]'), i;
+    for (i = 0; i < sibs.length; i++) if (sibs[i] === el) return 'cls:' + cn + ':' + i;
+    return null;
+  }
+  function get(el) {
+    return (el.type === 'checkbox' || el.type === 'radio') ? el.checked : el.value;
+  }
+  function set(el, v) {
+    var i;
+    if (el.tagName === 'SELECT') {
+      var ok = false;
+      for (i = 0; i < el.options.length; i++) if (el.options[i].value === v) ok = true;
+      if (!ok) return;
+    }
+    if (el.type === 'checkbox' || el.type === 'radio') el.checked = !!v;
+    else el.value = v;
+  }
+  function fire(el, type) {
+    try { el.dispatchEvent(new Event(type, { bubbles: true })); } catch (e) {}
+  }
+  function restore() {
+    var raw = null, data = null, els, k, i;
+    try { raw = localStorage.getItem(KEY); } catch (e) { return; }
+    if (!raw) return;
+    try { data = JSON.parse(raw); } catch (e) { return; }
+    els = list();
+    for (i = 0; i < els.length; i++) { k = keyOf(els[i]); if (k && data[k] !== undefined) set(els[i], data[k]); }
+    for (i = 0; i < els.length; i++) { fire(els[i], 'input'); fire(els[i], 'change'); }
+    for (i = 0; i < els.length; i++) { k = keyOf(els[i]); if (k && data[k] !== undefined) set(els[i], data[k]); }
+  }
+  var timer = null;
+  function save() {
+    if (timer) clearTimeout(timer);
+    timer = setTimeout(function () {
+      var els = list(), data = {}, k, i;
+      for (i = 0; i < els.length; i++) { k = keyOf(els[i]); if (k) data[k] = get(els[i]); }
+      try { localStorage.setItem(KEY, JSON.stringify(data)); } catch (e) {}
+    }, 200);
+  }
+  document.addEventListener('input', save, true);
+  document.addEventListener('change', save, true);
+  window.addEventListener('load', restore);
+  window.__simSettings = {
+    clear: function () { try { localStorage.removeItem(KEY); } catch (e) {} }
+  };
+})();
 </script>
 </body>
 </html>
